@@ -1,4 +1,4 @@
-package com.github.zzlkikolk.core.executor;
+package com.github.zzlkikolk.core.executor.rule;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,8 +6,6 @@ import java.util.Map;
 
 /**
  * @author zhangzhilin
- * @version 2025
- * @date 2025/09/16 15:49
  */
 public class RuleNodeExecutorFactory {
 

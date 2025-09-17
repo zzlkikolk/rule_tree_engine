@@ -11,8 +11,7 @@ import com.github.zzlkikolk.core.model.actions.Actions;
 public class LogSuspiciousActionExecutor implements ActionsExecutor{
     @Override
     public void execute(RuleExecutionContext context, Actions actions,boolean result) {
-        if (result)
-             System.out.println("打印动作日志");
+        System.out.println("打印动作日志"+result);
     }
 
     @Override

@@ -20,6 +20,6 @@ public class UserRiskScoreDataProvider implements ContextDataProvider<Long> {
         RiskControlContextParam riskControlContextParam = (RiskControlContextParam) contextParam;
         if(riskControlContextParam.getUserId()==1)
             return 100L;
-        return 59L;
+        return 1059L;
     }
 }

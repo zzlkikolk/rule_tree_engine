@@ -4,6 +4,7 @@ import com.github.zzlkikolk.context.RuleExecutionContext;
 import com.github.zzlkikolk.core.executor.actions.ActionsExecutorFactory;
 import com.github.zzlkikolk.core.model.rule.LogicalNode;
 import com.github.zzlkikolk.core.model.rule.RootNode;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -13,14 +14,17 @@ import java.util.List;
  */
 public class LogicalNodeExecutor implements RuleNodeExecutor{
 
-    private final RuleNodeExecutorFactory ruleNodeExecutorFactory;
+    @Setter
+    private  RuleNodeExecutorFactory ruleNodeExecutorFactory;
 
-    public LogicalNodeExecutor(RuleNodeExecutorFactory ruleNodeExecutorFactory){
-        this.ruleNodeExecutorFactory=ruleNodeExecutorFactory;
-    }
+
 
     @Override
     public boolean execute(RuleExecutionContext context, RootNode rootNode) {
+
+        if(ruleNodeExecutorFactory==null){
+            throw new IllegalArgumentException("ruleNodeExecutorFactory is not null");
+        }
 
         LogicalNode logicalNode = (LogicalNode) rootNode;
         List<RootNode> children = logicalNode.getChildren();

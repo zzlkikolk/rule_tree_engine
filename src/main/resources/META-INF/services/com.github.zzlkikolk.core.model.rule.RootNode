@@ -1,3 +1,4 @@
 com.github.zzlkikolk.core.model.rule.BranchNode
 com.github.zzlkikolk.core.model.rule.LogicalNode
 com.github.zzlkikolk.core.model.rule.leaf.RapidLargeTradeNode
+com.github.zzlkikolk.core.model.rule.leaf.RiskScoreNode

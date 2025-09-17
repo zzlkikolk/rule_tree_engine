@@ -4,6 +4,7 @@ import com.github.zzlkikolk.context.RuleExecutionContext;
 import com.github.zzlkikolk.core.executor.actions.ActionsExecutorFactory;
 import com.github.zzlkikolk.core.model.rule.BranchNode;
 import com.github.zzlkikolk.core.model.rule.RootNode;
+import lombok.Setter;
 
 import java.util.List;
 
@@ -13,14 +14,16 @@ import java.util.List;
  */
 public class BranchNodeExecutor implements RuleNodeExecutor{
 
-    private final RuleNodeExecutorFactory ruleNodeExecutorFactory;
+    @Setter
+    private  RuleNodeExecutorFactory ruleNodeExecutorFactory;
 
-    public BranchNodeExecutor(RuleNodeExecutorFactory ruleNodeExecutorFactory){
-        this.ruleNodeExecutorFactory=ruleNodeExecutorFactory;
-    }
 
     @Override
     public boolean execute(RuleExecutionContext context, RootNode rootNode) {
+
+        if(ruleNodeExecutorFactory==null){
+            throw new IllegalArgumentException("ruleNodeExecutorFactory is not null");
+        }
 
         BranchNode branchNode = (BranchNode) rootNode;
         // 遍历每个 Case 分支

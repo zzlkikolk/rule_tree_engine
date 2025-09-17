@@ -23,31 +23,34 @@ public class BranchNodeExecutor implements RuleNodeExecutor{
     public boolean execute(RuleExecutionContext context, RootNode rootNode) {
 
         BranchNode branchNode = (BranchNode) rootNode;
-
-        List<BranchNode.CaseNode> caseNodes = branchNode.getCaseNodes();
-        boolean check = false;
-
         // 遍历每个 Case 分支
-        for (BranchNode.CaseNode caseNode : caseNodes) {
-            boolean flag = false;
-            List<RootNode> conditions = caseNode.getConditions();
-            // 1. 执行分支的所有条件
-            for (RootNode condition : conditions) {
-                RuleNodeExecutor ruleNodeExecutor = ruleNodeExecutorFactory.getRuleNodeExecutor(condition.getType());
-                flag = ruleNodeExecutor.execute(context,condition);
-                if(!flag) break; //未通过直接跳出
+        for (BranchNode.CaseNode caseNode : branchNode.getCaseNodes()) {
+            // 条件检查
+            boolean condOk = true;
+            for (RootNode condition : caseNode.getConditions()) {
+                RuleNodeExecutor executor = ruleNodeExecutorFactory.getRuleNodeExecutor(condition.getType());
+                if (!executor.execute(context, condition)) {
+                    condOk = false;
+                    break;
+                }
             }
-            if(!flag) break;//未通过直接跳出当前case
-
-            List<RootNode> then = caseNode.getThen();
-            for (RootNode node : then) {
-                RuleNodeExecutor ruleNodeExecutor = ruleNodeExecutorFactory.getRuleNodeExecutor(node.getType());
-                check=ruleNodeExecutor.execute(context,node);
-                if(!check) break;//有一个条件为通过则直接退出
+            if (!condOk) {
+                continue;  // 去试下一个 case
+            }
+            // then 动作
+            boolean actionOk = true;
+            for (RootNode actionNode : caseNode.getThen()) {
+                RuleNodeExecutor executor = ruleNodeExecutorFactory.getRuleNodeExecutor(actionNode.getType());
+                if (!executor.execute(context, actionNode)) {
+                    actionOk = false;
+                    break;
+                }
+            }
+            if (actionOk) {
+                return true;  // 一旦 then 成功，整个 branch node 可以返回 true
             }
         }
-
-        return check;
+        return false;  // 所有 case 都没成功 then，就返回 false
     }
 
     @Override

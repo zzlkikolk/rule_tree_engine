@@ -13,18 +13,8 @@ import java.util.List;
  * @version 2025
  * @date 2025/09/16 15:49
  */
-@RequiredArgsConstructor
-public class RuleEngine {
 
-    private final RuleNodeExecutorFactory ruleNodeExecutorFactory;
+public interface RuleEngine {
 
-
-    public boolean execute(List<RootNode> list, ContextParam contextParam){
-        boolean check = false;
-        for (RootNode rootNode : list) {
-            RuleNodeExecutor ruleNodeExecutor = ruleNodeExecutorFactory.getRuleNodeExecutor(rootNode.getType());
-        }
-        //TODO 执行规则
-        return check;
-    }
+    boolean execute(List<RootNode> list, ContextParam contextParam);
 }

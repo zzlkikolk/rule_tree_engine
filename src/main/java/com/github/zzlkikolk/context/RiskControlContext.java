@@ -14,25 +14,18 @@ import java.util.Map;
  */
 public class RiskControlContext implements RuleExecutionContext{
 
-    @Getter
-    private final Long userId;
-
     private final ContextParam contextParam;
     private final Map<String, ContextDataProvider<?>> providers;
 
-    public RiskControlContext(Long userId,
-                              ContextParam contextParam,
+    public RiskControlContext(ContextParam contextParam,
                               List<ContextDataProvider<?>> providerList) {
         this.providers = new HashMap<>();
-        this.userId = userId;
         this.contextParam=contextParam;
         providerList.forEach(p -> providers.put(p.getType(), p));
     }
 
-    public RiskControlContext(Long userId,
-                              ContextParam contextParam,
+    public RiskControlContext(ContextParam contextParam,
                               Map<String, ContextDataProvider<?>> providers) {
-        this.userId = userId;
         this.contextParam=contextParam;
         this.providers=providers;
     }
